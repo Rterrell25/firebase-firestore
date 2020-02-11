@@ -1,14 +1,16 @@
 import React, { Component } from "react";
+
 import { firestore } from "../firebase";
-import { collectIdsAndDocs } from "../utilities";
+
 import Posts from "./Posts";
+import { collectIdsAndDocs } from "../utilities";
 
 class Application extends Component {
   state = {
     posts: []
   };
 
-  unsubcribe = null;
+  unsubscribe = null;
 
   componentDidMount = async () => {
     this.unsubscribe = firestore.collection("posts").onSnapshot(snapshot => {
@@ -18,7 +20,7 @@ class Application extends Component {
   };
 
   componentWillUnmount = () => {
-    this.unsubcribe();
+    this.unsubscribe();
   };
 
   render() {
