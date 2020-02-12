@@ -1,7 +1,10 @@
 import React, { useContext } from "react"
-import { UserContext } from "../providers/UserProvider"
+
 import moment from "moment"
 import { firestore } from "../firebase"
+import { UserContext } from "../providers/UserProvider"
+
+import { Link } from "react-router-dom"
 
 const belongsToCurrentUser = (currentUser, postAuthor) => {
   if (!currentUser) return false
@@ -10,15 +13,18 @@ const belongsToCurrentUser = (currentUser, postAuthor) => {
 
 const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
   const currentUser = useContext(UserContext)
+
+  console.log(user)
   const postRef = firestore.doc(`posts/${id}`)
   const remove = () => postRef.delete()
-
   const star = () => postRef.update({ stars: stars + 1 })
 
   return (
     <article className='Post'>
       <div className='Post--content'>
-        <h3>{title}</h3>
+        <Link to={`/posts/${id}`}>
+          <h3>{title}</h3>
+        </Link>
         <div>{content}</div>
       </div>
       <div className='Post--meta'>
