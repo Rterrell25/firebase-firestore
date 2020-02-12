@@ -1,13 +1,11 @@
-import React from 'react'
+import React from "react"
 
-import SignIn from './SignIn';
-import SignUp from './SignUp';
+import SignIn from "./SignIn"
 
 const SignInAndSignUp = () => (
   <div>
     <SignIn />
-    <SignUp />
   </div>
-);
+)
 
-export default SignInAndSignUp;
+export default SignInAndSignUp
