@@ -9,6 +9,7 @@ const CurrentUser = ({ displayName, photoURL, email, createdAt, children }) => {
       <div className='CurrentUser--profile'>
         {photoURL && <img src={photoURL} alt={displayName} />}
         <div className='CurrentUser--information'>
+          <p className='current User'>{displayName}</p>
           <p className='email'>{email}</p>
           <p className='created-at'>
             {moment(createdAt.toDate && createdAt.toDate()).calendar()}
