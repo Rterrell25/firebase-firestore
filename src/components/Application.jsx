@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import Authentication from "./Authentication";
 import { firestore } from "../firebase";
 
 import Posts from "./Posts";
@@ -7,7 +7,8 @@ import { collectIdsAndDocs } from "../utilities";
 
 class Application extends Component {
   state = {
-    posts: []
+    posts: [],
+    user: null
   };
 
   unsubscribe = null;
@@ -24,11 +25,12 @@ class Application extends Component {
   };
 
   render() {
-    const { posts } = this.state;
+    const { posts, user } = this.state;
 
     return (
       <main className="Application">
         <h1>Think Piece</h1>
+        <Authentication user={user} />
         <Posts posts={posts} />
       </main>
     );
