@@ -1,16 +1,17 @@
-import React from "react";
-import Post from "./Post";
-import AddPost from "./AddPost";
+import React from "react"
+import Post from "./Post"
+import AddPost from "./AddPost"
+import { PostsContext } from "../providers/PostsProvider"
 
 const Posts = ({ posts }) => {
   return (
-    <section className="Posts">
+    <section className='Posts'>
       <AddPost />
       {posts.map(post => (
         <Post {...post} key={post.id} />
       ))}
     </section>
-  );
-};
+  )
+}
 
-export default Posts;
+export default Posts
