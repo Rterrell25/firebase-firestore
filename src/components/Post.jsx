@@ -1,30 +1,36 @@
-import React from "react";
+import React, { useContext } from "react"
+import { UserContext } from "../providers/UserProvider"
+import moment from "moment"
+import { firestore } from "../firebase"
 
-import moment from "moment";
-import { firestore } from "../firebase";
+const belongsToCurrentUser = (currentUser, postAuthor) => {
+  if (!currentUser) return false
+  return currentUser.uid === postAuthor.uid
+}
 
 const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
-  const postRef = firestore.doc(`posts/${id}`);
-  const remove = () => postRef.delete();
+  const currentUser = useContext(UserContext)
+  const postRef = firestore.doc(`posts/${id}`)
+  const remove = () => postRef.delete()
 
-  const star = () => postRef.update({ stars: stars + 1 });
+  const star = () => postRef.update({ stars: stars + 1 })
 
   return (
-    <article className="Post">
-      <div className="Post--content">
+    <article className='Post'>
+      <div className='Post--content'>
         <h3>{title}</h3>
         <div>{content}</div>
       </div>
-      <div className="Post--meta">
+      <div className='Post--meta'>
         <div>
           <p>
-            <span role="img" aria-label="star">
+            <span role='img' aria-label='star'>
               ⭐️
             </span>
             {stars}
           </p>
           <p>
-            <span role="img" aria-label="comments">
+            <span role='img' aria-label='comments'>
               🙊
             </span>
             {comments}
@@ -33,17 +39,19 @@ const Post = ({ id, title, content, user, createdAt, stars, comments }) => {
           <p>{moment(createdAt.toDate()).calendar()}</p>
         </div>
         <div>
-          <button className="star" onClick={star}>
+          <button className='star' onClick={star}>
             Star
           </button>
-          <button className="delete" onClick={remove}>
-            Delete
-          </button>
+          {belongsToCurrentUser(currentUser, user) && (
+            <button className='delete' onClick={remove}>
+              Delete
+            </button>
+          )}
         </div>
       </div>
     </article>
-  );
-};
+  )
+}
 
 Post.defaultProps = {
   title: "An Incredibly Hot Take",
@@ -58,6 +66,6 @@ Post.defaultProps = {
   createdAt: new Date(),
   stars: 0,
   comments: 0
-};
+}
 
-export default Post;
+export default Post

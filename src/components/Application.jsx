@@ -7,7 +7,7 @@ class Application extends Component {
   render() {
     return (
       <main className='Application'>
-        <h1>Think Piece</h1>
+        <h1>Job Tracker</h1>
         <Authentication />
         <Posts />
       </main>
